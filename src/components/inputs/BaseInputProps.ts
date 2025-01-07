@@ -93,6 +93,7 @@ export const timerInputSchema = inputBaseSchema.extend({
 
 export const tbaSchema = inputBaseSchema.extend({
   type: z.literal('tba'),
+  defaultValue: z.string().default('').describe('The default value'),
 });
 
 export const sectionSchema = z.object({
