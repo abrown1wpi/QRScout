@@ -87,6 +87,7 @@ export const sectionSchema = z.object({
       rangeInputSchema,
       booleanInputSchema,
       timerInputSchema,
+      tbaSchema,
     ]),
   ),
 });
