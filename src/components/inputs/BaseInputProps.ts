@@ -93,7 +93,7 @@ export const timerInputSchema = inputBaseSchema.extend({
 
 export const tbaSchema = inputBaseSchema.extend({
   type: z.literal('tba'),
-})
+});
 
 export const sectionSchema = z.object({
   name: z.string(),
