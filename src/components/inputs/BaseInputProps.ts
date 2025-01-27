@@ -71,7 +71,7 @@ export const timerInputSchema = inputBaseSchema.extend({
   defaultValue: z.number().default(0).describe('The default value'),
 });
 
-export const tbaSchema = inputBaseSchema.extend({
+export const tbaInputSchema = inputBaseSchema.extend({
   type: z.literal('tba'),
   defaultValue: z.string().default('').describe('The default value'),
 });
@@ -87,7 +87,7 @@ export const sectionSchema = z.object({
       rangeInputSchema,
       booleanInputSchema,
       timerInputSchema,
-      tbaSchema,
+      tbaInputSchema,
     ]),
   ),
 });
@@ -212,6 +212,7 @@ export type CounterInputData = z.infer<typeof counterInputSchema>;
 export type RangeInputData = z.infer<typeof rangeInputSchema>;
 export type BooleanInputData = z.infer<typeof booleanInputSchema>;
 export type TimerInputData = z.infer<typeof timerInputSchema>;
+export type TbaInputData = z.infer<typeof tbaInputSchema>;
 
 export type InputPropsMap = {
   text: StringInputData;
