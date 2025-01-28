@@ -18,6 +18,7 @@ export function Footer() {
             </span>
           </>
         )}
+        <div>Powered by <a href="https://www.thebluealliance.com" className='text-primary'>The Blue Alliance</a>.</div>
       </div>
     </footer>
   );
