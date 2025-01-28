@@ -5,6 +5,7 @@ import NumberInput from './NumberInput';
 import RangeInput from './RangeInput';
 import SelectInput from './SelectInput';
 import StringInput from './StringInput';
+import TBAInput from './tbaInput';
 import TimerInput from './TimerInput';
 
 export interface ConfigurableInputProps {
@@ -29,5 +30,7 @@ export default function ConfigurableInput(props: ConfigurableInputProps) {
       return <RangeInput {...props} key={props.code} />;
     case 'timer':
       return <TimerInput {...props} key={props.code} />;
+    case 'tba':
+      return <TBAInput {...props} key={props.code} />;
   }
 }

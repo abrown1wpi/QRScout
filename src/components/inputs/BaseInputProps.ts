@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export const inputTypeSchema = z
-  .enum(['text', 'number', 'boolean', 'range', 'select', 'counter', 'timer'])
+  .enum(['text', 'number', 'boolean', 'range', 'select', 'counter', 'timer', 'tba'])
   .describe('The type of input');
 
 export const inputBaseSchema = z.object({
@@ -222,6 +222,7 @@ export type InputPropsMap = {
   select: SelectInputData;
   counter: CounterInputData;
   timer: TimerInputData;
+  tba: TbaInputData;
 };
 
 export type SectionProps = z.infer<typeof sectionSchema>;
