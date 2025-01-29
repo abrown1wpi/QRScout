@@ -4,6 +4,7 @@ import { inputSelector, updateValue, useQRScoutState } from '../../store/store';
 import { Textarea } from '../ui/textarea';
 import { StringInputData } from './BaseInputProps';
 import { ConfigurableInputProps } from './ConfigurableInput';
+import { Button } from '../ui/button';
 
 export default function TBAInput(props: ConfigurableInputProps) {
   const data = useQRScoutState(
@@ -13,7 +14,6 @@ export default function TBAInput(props: ConfigurableInputProps) {
   if (!data) {
     return <div>Invalid input</div>;
   }
-
   const [value, setValue] = React.useState(data.defaultValue);
 
   const resetState = useCallback(() => {
@@ -31,20 +31,32 @@ export default function TBAInput(props: ConfigurableInputProps) {
 
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+      console.log(e.currentTarget.value);
       setValue(e.currentTarget.value);
+      console.log(value);
       e.preventDefault();
-      if(e.currentTarget.value !== '') {
-        console.log(fetch(`http://www.thebluealliance.com/api/v3/event/${e.currentTarget.value}/matches`, {headers: {'X-TBA-Auth-Key': '5bFhdfoXFAs0q29cECiqoKhIL6zUvKvt8R7I0IJRmjiMivI4FGPG7CyYjfEf7pLG', 'Accept': 'application/json'}}));
-        //Note: it isn't critical that this is sent over HTTPS- it's not confidental information, and is publicly avalable on TBA's website
-      }
     },
     [],
   );
-
+  const handleSubmit = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+      console.log('TBA data submited');
+      //A lot of this code here is to make TypeScript stop complaining about things possibly being null or not existing. If someone knows of a more efficent way to write it, please do.
+      const containerElement = e.currentTarget.parentElement;
+      if (containerElement !== null) {
+        const textEl: HTMLTextAreaElement | Element = containerElement.children[0];
+        const textValue: String = (textEl instanceof HTMLTextAreaElement) ? textEl.value : '';
+        if (textValue !== '') {
+          fetch(`https://www.thebluealliance.com/api/v3/event/${textValue}/matches`, { headers: { 'X-TBA-Auth-Key': '5bFhdfoXFAs0q29cECiqoKhIL6zUvKvt8R7I0IJRmjiMivI4FGPG7CyYjfEf7pLG', 'Accept': 'application/json' } }).then(() => {
+            
+          });
+        }
+      }
+    },
+    []
+  );
   if (!data) {
     return <div>Invalid input</div>;
   }
-  //I was going to try to make a submit button, but I don't know enough TypeScript and possibly React to know how to do that. If it were just HTML I could, but this isn't jut HTML. -Owen
   //TODO: make submit button to cut down on unnecessary HTTP requests while the user is typing
   return (
     <>
@@ -57,6 +69,8 @@ export default function TBAInput(props: ConfigurableInputProps) {
         maxLength={data.max}
         minLength={data.min}
       />
+      <hr></hr>
+      <Button variant={'outline'} size={'lg'} onClick={handleSubmit}>Submit</Button>
     </>
   );
 }
