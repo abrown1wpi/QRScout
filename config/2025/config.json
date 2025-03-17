@@ -1,6 +1,6 @@
 {
   "title": "QRScout",
-  "page_title": "Reefscape",
+  "page_title": "Beefscape",
   "delimiter": "\t",
   "teamNumber": 2713,
   "theme": {
@@ -62,7 +62,7 @@
       "name": "Prematch",
       "fields": [
         {
-          "title": "Scouter Initials",
+          "title": "Scouter Initials - Team Number",
           "description": "Enter the initials of the scouter.",
           "type": "text",
           "required": true,
@@ -108,17 +108,17 @@
           "max": 19999
         },
         {
-          "title": "Starting Position",
+          "title": "Starting Position 1-7",
           "description": "The starting position of the robot.",
           "type": "select",
           "required": true,
           "code": "Prsp",
           "formResetBehavior": "reset",
-          "defaultValue": "",
+          "defaultValue": "m",
           "choices": {
-            "R1": "Processor Side",
-            "R2": "Middle",
-            "R3": "Non-Processor Side"
+            "b": "Barge",
+            "m": "Middle",
+            "p": "Procesor"
           }
         },
         {
@@ -129,22 +129,21 @@
           "code": "noShow",
           "formResetBehavior": "reset",
           "defaultValue": false
-        },
-        {
-          "title": "Cage Position",
-          "description": "The starting level of the cage",
-          "type": "select",
-          "required": true,
-          "code": "CPos",
-          "formResetBehavior": "reset",
-          "defaultValue": "",
-          "choices": { "SP1": "High", "SP2": "Low" }
         }
       ]
     },
     {
       "name": "Autonomous",
       "fields": [
+        {
+          "title": "Pushed Teamate",
+          "description": "Did the auto push a teamate off the line",
+          "type": "boolean",
+          "required": false,
+          "code": "teamPush",
+          "formResetBehavior": "reset",
+          "defaultValue": false
+        },
         {
           "title": "Moved?",
           "description": "Check if the robot moved during autonomous.",
@@ -153,15 +152,6 @@
           "code": "Mved",
           "formResetBehavior": "reset",
           "defaultValue": false
-        },
-        {
-          "title": "Timer",
-          "description": "The time it took for the robot to finish autonomous.",
-          "type": "timer",
-          "required": false,
-          "code": "timer",
-          "formResetBehavior": "reset",
-          "defaultValue": 0
         },
         {
           "title": "Coral L1 Scored",
@@ -230,50 +220,36 @@
           "step": 1
         },
         {
-          "title": "Intentionally Removed Algae?",
-          "type": "boolean",
+          "title": "Algae Removed",
+          "type": "counter",
           "required": false,
           "code": "dto",
           "formResetBehavior": "reset",
-          "defaultValue": false
-        },
-        {
-          "title": "Auto Foul",
-          "type": "counter",
-          "required": false,
-          "code": "auf",
-          "formResetBehavior": "reset",
           "defaultValue": 0,
-          "min": 0,
           "step": 1
         }
       ]
     },
     {
-      "name": "Teleop",
+      "name": "Coral",
       "fields": [
         {
-          "title": "Intentionally Removed Algae?",
-          "type": "boolean",
+          "title": "Floor Coral Intake",
+          "type": "counter",
           "required": false,
-          "code": "daT",
+          "code": "FCI",
           "formResetBehavior": "reset",
-          "defaultValue": false
+          "defaultValue": 0,
+          "step": 1
         },
         {
-          "title": "Pickup Location",
-          "type": "select",
+          "title": "Station Coral Intake",
+          "type": "counter",
           "required": false,
-          "code": "TGPL",
+          "code": "SCI",
           "formResetBehavior": "reset",
-          "defaultValue": "",
-          "choices": {
-            "1": "None",
-            "2": "Ground",
-            "3": "Human Player",
-            "4": "Both"
-          },
-          "multiSelect": true
+          "defaultValue": 0,
+          "step": 1
         },
         {
           "title": "Coral L1 Scored",
@@ -318,6 +294,38 @@
           "defaultValue": 0,
           "min": 0,
           "step": 1
+        }
+      ]
+    },
+    {
+      "name": "Algae",
+      "fields": [
+        {
+          "title": "Algae Removed",
+          "type": "counter",
+          "required": false,
+          "code": "daT",
+          "formResetBehavior": "reset",
+          "defaultValue": 0,
+          "step": 1
+        },
+        {
+          "title": "Floor Algae Intake",
+          "type": "counter",
+          "required": false,
+          "code": "FAI",
+          "formResetBehavior": "reset",
+          "defaultValue": 0,
+          "step": 1
+        },
+        {
+          "title": "Reef Algae Intake",
+          "type": "counter",
+          "required": false,
+          "code": "RAI",
+          "formResetBehavior": "reset",
+          "defaultValue": 0,
+          "step": 1
         },
         {
           "title": "Barge Algae Scored",
@@ -340,6 +348,38 @@
           "defaultValue": 0,
           "min": 0,
           "step": 1
+        }
+      ]
+    },
+    {
+      "name": "Postmatch",
+      "fields": [
+        {
+          "title": "End Position",
+          "type": "select",
+          "required": true,
+          "code": "epo",
+          "formResetBehavior": "reset",
+          "defaultValue": "No",
+          "choices": {
+            "No": "Not Parked",
+            "P": "Parked",
+            "Sc": "High Hang",
+            "Dc": "Low Hang",
+            "Fc": "Failed Hang"
+          }
+        },
+        {
+          "title": "Attempted Climb",
+          "type": "select",
+          "required": false,
+          "code": "aco",
+          "formResetBehavior": "reset",
+          "defaultValue": "No",
+          "choices": {
+            "No": "Attempted climb",
+            "Yes": "Did not attempt climb"
+          }
         },
         {
           "title": "Crossed Field/Played Defense?",
@@ -358,68 +398,7 @@
           "defaultValue": false
         },
         {
-          "title": "Touched Opposing Cage?",
-          "type": "counter",
-          "required": false,
-          "code": "Fou/Tech",
-          "formResetBehavior": "reset",
-          "defaultValue": 0,
-          "step": 1
-        }
-      ]
-    },
-    {
-      "name": "Endgame",
-      "fields": [
-        {
-          "title": "End Position",
-          "type": "select",
-          "required": true,
-          "code": "epo",
-          "formResetBehavior": "reset",
-          "defaultValue": "No",
-          "choices": {
-            "No": "Not Parked",
-            "P": "Parked",
-            "Sc": "High Hang",
-            "Dc": "Low Hang",
-            "Fc": "Failed Hang"
-          }
-        },
-        {
-          "title": "Died?",
-          "type": "boolean",
-          "required": false,
-          "code": "DEg",
-          "formResetBehavior": "reset",
-          "defaultValue": false
-        },
-        {
-          "title": "Tipped/Fell Over?",
-          "type": "boolean",
-          "required": false,
-          "code": "TFOT",
-          "formResetBehavior": "reset",
-          "defaultValue": false
-        }
-      ]
-    },
-    {
-      "name": "Postmatch",
-      "fields": [
-        {
-          "title": "Offense Skill",
-          "type": "range",
-          "required": false,
-          "code": "or",
-          "formResetBehavior": "reset",
-          "defaultValue": 3,
-          "min": 1,
-          "max": 5,
-          "step": 1
-        },
-        {
-          "title": "Defensive Skill",
+          "title": "Driver skill",
           "type": "range",
           "required": false,
           "code": "dr",
@@ -428,19 +407,6 @@
           "min": 0,
           "max": 5,
           "step": 1
-        },
-        {
-          "title": "Yellow/Red Card",
-          "type": "select",
-          "required": true,
-          "code": "yc",
-          "formResetBehavior": "reset",
-          "defaultValue": "No Card",
-          "choices": {
-            "No Card": "No Card",
-            "Yellow": "Yellow Card",
-            "Red": "Red Card"
-          }
         },
         {
           "title": "Comments",
